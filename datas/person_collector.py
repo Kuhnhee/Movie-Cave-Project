@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import urllib.request
 from pprint import pprint
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 import json
 
 def make_str(st):
@@ -12,18 +12,13 @@ def make_str(st):
         else:
             new_st += s
     return new_st
-
-# rank_dir = []
-# movie_dir = dict()
-# today = str(date.today())
-# today = make_str(today)
-
-today = datetime.today()
+ 
+today = date.today()
 tg_list = [1,2]
 for tg in tg_list:
     db = {}
     for _ in range(365):
-        target_date = str(today)[:10]
+        target_date = str(today)
         target_date = make_str(target_date)
 
         url = 'https://movie.naver.com/movie/sdb/rank/rpeople.nhn?tg={}&date={}'.format(tg, target_date)

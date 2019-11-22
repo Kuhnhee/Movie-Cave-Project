@@ -1,18 +1,22 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Django & Vue</h1>
+    <p>메인 페이지입니다.</p>
   </div>
 </template>
 
+
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
+
+// import router from '@/router'
+// import jwtDecode from 'jwt-decode'
 
 export default {
   name: 'home',
+
   components: {
-    HelloWorld
   }
 }
 </script>

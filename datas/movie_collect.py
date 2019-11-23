@@ -33,6 +33,7 @@ def make_lst(st):
     return people_lst
 
 
+
 NAVER_CLIENT_ID='KJX6vxTEIiw5slWc1kuK'
 NAVER_SECRET='J7vQdlWbqA'
 header={
@@ -44,12 +45,15 @@ NAVER_URL='https://movie.naver.com/'
 IMG_URL='https://movie.naver.com/movie/bi/mi/photoViewPopup.nhn?movieCode='
 
 
-with open('genre_ranking.json', 'rb') as fr:
+
+with open('checker.json', 'rb') as fr:
     movie_dic = json.load(fr)
 
 
-
-for k, v in movie_dic:
+db = []
+for info in movie_dic:
+    k = info['name']
+    v = info['link']
     movie={}
     # pk: 영화 코드
     movie['pk'] = find_code(v)
@@ -58,7 +62,7 @@ for k, v in movie_dic:
     query_str="query="+k
     req = requests.get(BASE_URL+query_str, headers=header).json()
     tg=req['items']
-    if tg > 0:
+    if len(tg) > 0:
         new_info=tg[0]
 
         fields={}
@@ -85,32 +89,39 @@ for k, v in movie_dic:
         soup=BeautifulSoup(html, 'lxml')
 
         # 상세설명
-        fields['description'] = soup.find('div', class_='story_area').p.text
-
+        descriptrion = soup.find('div', class_='story_area')
+        if descriptrion:
+            fields['description'] = descriptrion.p.text
+        else:
+            fields['description'] = '내용 없음'
         spec = soup.find('dl', class_='info_spec')
-        tg_spec = spec.find('dd')
-        spec_links=tg_spec.find_all('a')
-
-        
         genre=[]
-        for link in spec_links:
-            now = str(link)[40:-4]
-            new_info = find_tg(now)
-            if new_info[:5]=='genre':
-                g = int(new_info[6:])
-                genre.append(g)
-            elif new_info[:4]=='open':
-                op = new_info[5:]
-                if len(op) > 5:
-                    # 개봉일('yyyymmdd')
-                    fields['open_date'] = op
+        if spec:
+            tg_spec = spec.find('dd')
+            spec_links=tg_spec.find_all('a')
+            
+            for link in spec_links:
+                now = str(link)[40:-4]
+                new_info = find_tg(now)
+                if new_info[:5]=='genre':
+                    g = int(new_info[6:])
+                    genre.append(g)
+                elif new_info[:4]=='open':
+                    op = new_info[5:]
+                    if len(op) > 5:
+                        # 개봉일('yyyymmdd')
+                        fields['open_date'] = op
+
+        else:
+            fields['open_date'] = '정보 없음'
 
         # 장르(genre_id list)
         fields['genre'] = genre
         movie['fields'] = fields
+        db.append(movie)
 
-    with open('movies.json', 'w', encoding='UTF-8-sig') as fp:
-        json.dump(movie, fp, ensure_ascii=False, indent=4)
+with open('movies.json', 'w', encoding='UTF-8-sig') as fp:
+    json.dump(db, fp, ensure_ascii=False, indent=4)
 
 
 

@@ -80,7 +80,7 @@ for info in movie_dic:
         fields['actor'] = make_lst(new_info['actor'])
 
         # Image URL (api에서 제공하는 url은 크기가 작아서 별도 url사용)
-        fields['img_url'] = IMG_URL+v
+        fields['img_url'] = IMG_URL+str(movie['pk'])
 
         
 

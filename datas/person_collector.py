@@ -89,7 +89,11 @@ for movie in movie_dic:
         url = SEARCH_BASE_URL_QUERY + parse.quote(name) + SEARCH_BASE_URL_OPTION
         html = urllib.request.urlopen(url)
         soup = BeautifulSoup(html, 'lxml')
-        link = soup.find('ul', 'search_list_1').find('a')['href']
+        target = soup.find('ul', 'search_list_1')
+        if target == None:
+            continue
+        else:
+            link = target.find('a')['href']
         code = find_code(link)
 
         # 이 인물이 추가된 적이 없을 경우, 추가한다.
@@ -124,8 +128,8 @@ for movie in movie_dic:
             else:
                 person['fields']['role'].append('감독/각본/제작')
 
-            print("adding...")
-            pprint(person)
+            # print("adding...")
+            # pprint(person)
             db.append(person)
             code_book[code] = 1
         
@@ -145,7 +149,7 @@ for movie in movie_dic:
                         break
                 
 
-            print("done here!")
+            # print("done here!")
 
 fr.close()
 

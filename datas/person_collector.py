@@ -104,7 +104,11 @@ for movie in movie_dic:
             soup = BeautifulSoup(html, 'lxml')
 
             # 이미지
-            img_url = soup.find('div', 'poster').find('img')['src']
+            target = soup.find('div', 'poster')
+            if target == None:
+                img_url = '정보 없음'
+            else:
+                img_url = target.find('img')['src']
 
             # 설명(프로필에 있을 경우에만 저장)
             description = soup.find('div', 'con_tx')

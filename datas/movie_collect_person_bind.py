@@ -64,7 +64,7 @@ SEARCH_BASE_URL_QUERY = 'https://movie.naver.com/movie/search/result.nhn?query='
 SEARCH_BASE_URL_OPTION = '&section=people&ie=utf8'
 
 
-with open('checker.json', 'rb') as fr:
+with open('checker.json', 'r', encoding='UTF-8-sig') as fr:
     movie_dic = json.load(fr)
 
 
@@ -101,8 +101,8 @@ for info in movie_dic:
             directors = make_lst(new_info['director'])
             actors = make_lst(new_info['actor'])
             targets = [directors, actors]
-            for target in range(2):
-                for idx, name in enumerate(targets[target]):
+            for tg in range(2):
+                for idx, name in enumerate(targets[tg]):
                     url = SEARCH_BASE_URL_QUERY + parse.quote(name) + SEARCH_BASE_URL_OPTION
                     html = urllib.request.urlopen(url)
                     soup = BeautifulSoup(html, 'lxml')
@@ -114,7 +114,7 @@ for info in movie_dic:
                     code = find_person_code(link)
                     
                     # director
-                    if target == 0: 
+                    if tg == 0: 
                         directors_code.append(code)
                     # actor
                     else:

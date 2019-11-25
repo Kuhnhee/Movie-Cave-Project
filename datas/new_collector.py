@@ -21,7 +21,7 @@ def make_str(st):
 check = []
 db = []
 today = datetime.today()
-for _ in range(365):
+for _ in range(50):
     target_date = str(today)[:10]
     target_date = make_str(target_date)
 

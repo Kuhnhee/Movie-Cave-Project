@@ -40,7 +40,7 @@ for tg in tg_list:
         file_name = 'actor_list.json'
     elif tg == 2:
         file_name = 'staff_list.json'
-    with open(file_name, 'w', encoding='UTF-8-sig') as fp:
+    with open(file_name, 'w', encoding='UTF-8') as fp:
         json.dump(db, fp, ensure_ascii=False, indent=4)
 
 

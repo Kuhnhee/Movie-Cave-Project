@@ -135,9 +135,9 @@ for movie in movie_dic:
 
 fr.close()
 
-with open('directors.json', 'w', encoding='UTF-8-sig') as fp:
+with open('directors.json', 'w', encoding='UTF-8') as fp:
     json.dump(director_db, fp, ensure_ascii=False, indent=4)
 fp.close()
-with open('actors.json', 'w', encoding='UTF-8-sig') as fp:
+with open('actors.json', 'w', encoding='UTF-8') as fp:
     json.dump(actor_db, fp, ensure_ascii=False, indent=4)
 fp.close()

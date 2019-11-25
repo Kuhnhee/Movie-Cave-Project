@@ -174,4 +174,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# AUTH_USER_MODEL = 'movies.User'
+AUTH_USER_MODEL = 'movies.User'

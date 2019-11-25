@@ -1,60 +1,37 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
+  <div id="app" class="container">
+    <v-toolbar
+      dark
+      prominent
+      
+    >
+      <v-toolbar-title centered>Movie Cave</v-toolbar-title>
+      <v-spacer></v-spacer>
+    </v-toolbar>
+
+    <v-tabs
+      fixed-tabs
+      centered
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+      <v-tab to="/">Home</v-tab>
+      <v-tab to="/login">Login</v-tab>
+      <v-tab to="/profile">Profile</v-tab>
+      <v-tab to="/worldcup">World Cup</v-tab>
+    </v-tabs>
+    <div class="row justify-content-center">
+      <router-view class="col-12"/>
+    </div>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld';
+<style>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: white;
+}
 
-export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
-  },
-
-  data: () => ({
-    //
-  }),
-};
-</script>
+</style>

@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>로그인 페이지</h1>
+  <div id="login">
     <LoginForm/>
   </div>
 </template>
@@ -12,10 +11,10 @@ export default {
   name: 'Login',
   components: {
     LoginForm,
-  }
+  },
+  
 }
 </script>
 
 <style>
-
 </style>

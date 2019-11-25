@@ -1,22 +1,53 @@
 <template>
   <div class="home">
-    <h1>Django & Vue</h1>
-    <p>메인 페이지입니다.</p>
+    <MovieList :movies="movies" />
   </div>
 </template>
 
 
 <script>
 // @ is an alias to /src
-
-
-// import router from '@/router'
+import MovieList from '@/components/MovieList'
+import axios from 'axios'
+import router from '@/router'
 // import jwtDecode from 'jwt-decode'
 
 export default {
   name: 'home',
-
   components: {
-  }
+    MovieList,
+  },
+  data() {
+    return{
+      movies: []
+    }
+  },
+  methods: {
+    loggedIn() {
+      this.$session.start()
+      if (!this.$session.has('jwt')) {
+        router.push('/login')
+      }
+    },
+
+    getMovies() {
+      const token = this.$session.get('jwt')
+      const options = {
+        headers: {
+          Authorization: 'JWT' + token
+        }
+      }
+      axios.get(`http://localhost:8000/api/v1/movies/`, options)
+      .then(res => {
+        this.moveis = res.data.movie_set
+      })
+    },
+
+    mounted() {
+      this.loggedIn(),
+      this.getMovies()
+    },
+  },
+
 }
 </script>

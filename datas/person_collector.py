@@ -84,17 +84,7 @@ for movie in movie_dic:
     directors = movie['fields']['director']
     actors = movie['fields']['actor']
     newbies = directors + actors # 0~len(directors)-1 | len(directors)~len(actors)-1
-    for idx, name in enumerate(newbies):
-        # url에 이름을 사용하기 위해서는 한글 인코딩이 필요 (parse.quote())
-        url = SEARCH_BASE_URL_QUERY + parse.quote(name) + SEARCH_BASE_URL_OPTION
-        html = urllib.request.urlopen(url)
-        soup = BeautifulSoup(html, 'lxml')
-        target = soup.find('ul', 'search_list_1')
-        if target == None:
-            continue
-        else:
-            link = target.find('a')['href']
-        code = find_code(link)
+    for idx, code in enumerate(newbies):
 
         # 이 인물이 추가된 적이 없을 경우, 추가한다.
         if code not in code_book:
@@ -117,6 +107,9 @@ for movie in movie_dic:
             else:
                 description = description.text
 
+            # 이름
+            name = soup.find('h3', 'h_movie').find('a').text
+
             person = {
                 'pk': code,
                 'model': 'movies.movier',
@@ -136,6 +129,7 @@ for movie in movie_dic:
             # pprint(person)
             db.append(person)
             code_book[code] = 1
+            # pprint(person)
         
         else:
             # 직업이 여러개인 사람 처리

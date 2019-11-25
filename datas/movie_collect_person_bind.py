@@ -76,7 +76,7 @@ for info in movie_dic:
     # pk: 영화 코드
     movie_code = find_code_fr_end(v)
     movie['pk'] = int(movie_code)
-    movie['model']='movies.Movie'
+    movie['model']='movies.movie'
 
     query_str="query="+k
     req = requests.get(BASE_URL+query_str, headers=header).json()
@@ -119,8 +119,8 @@ for info in movie_dic:
                     # actor
                     else:
                         actors_code.append(code)
-            fields['director'] = directors_code
-            fields['actor'] = actors_code
+            fields['directors'] = directors_code
+            fields['actors'] = actors_code
 
             # Image URL (api에서 제공하는 url은 크기가 작아서 별도 url사용)
             fields['img_url'] = IMG_URL+str(movie['pk'])
@@ -158,12 +158,12 @@ for info in movie_dic:
                 fields['open_date'] = '정보 없음'
 
             # 장르(genre_id list)
-            fields['genre'] = genre
+            fields['genres'] = genre
             movie['fields'] = fields
             db.append(movie)
             break
 
-with open('movies.json', 'w', encoding='UTF-8-sig') as fp:
+with open('movies.json', 'w', encoding='UTF-8') as fp:
     json.dump(db, fp, ensure_ascii=False, indent=4)
 
 

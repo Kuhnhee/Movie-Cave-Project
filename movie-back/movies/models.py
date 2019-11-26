@@ -40,4 +40,9 @@ class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class Worldcup(models.Model):
-    movies = models.ManyToManyField(Movie, related_name='worldcups', blank=True)
+    movies = models.ManyToManyField(Movie, related_name='worldcups', through='Ranking', blank=True)
+
+class Ranking(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    worldcup = models.ForeignKey(Worldcup, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)

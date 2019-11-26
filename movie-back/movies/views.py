@@ -9,6 +9,8 @@ from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+import random
+
 # .../users/pk/
 @api_view(['GET'])
 def user_detail(request, user_pk):
@@ -78,3 +80,23 @@ def genre_detail(request, genre_pk):
     genre = get_object_or_404(Genre, pk=genre_pk)
     genre_serializer = GenreSerializer(genre)
     return Response(genre_serializer.data)
+
+# .../worldcup/
+@api_view(['POST'])
+def create_worldcup(request):
+    pass
+
+# .../worldcup/
+@api_view(['GET'])
+def random_worldcup(request):
+    # random & filterting 자료 https://stackoverflow.com/questions/32389519/django-get-10-random-instances-from-a-queryset-and-order-them-into-a-new-querys
+    random_movies = random.sample(list(Movie.objects.all()), 32)
+    # random_movies = Movie.objects.all().order_by('?')[:32]
+
+    worldcup = Worldcup()
+    worldcup.save()
+    worldcup.movies.set(random_movies)
+
+    # worldcup = Worldcup.create(random_movies)
+    worldcup_serializer = WorldcupSerializer(worldcup)
+    return Response(worldcup_serializer.data)

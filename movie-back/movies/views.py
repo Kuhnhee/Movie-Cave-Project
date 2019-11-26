@@ -4,39 +4,77 @@ from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
-# from .serializers import UserSerializer
+from .models import *
+from .serializers import *
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+# .../users/pk/
+@api_view(['GET'])
+def user_detail(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
 
+    user_serializer = UserSerializer(user)
+    return Response(user_serializer.data)
 
+# .../movie/
+@api_view(['GET'])
+def movie(request):
+    movies = Movie.objects.all()
 
+    movie_serializer = MovieSerializer(movies, many=True)
+    return Response(movie_serializer.data)
 
+# .../movie/pk/
+@api_view(['GET'])
+def movie_detail(request, movie_pk):
+    movie = Movie.objects.get(pk=movie_pk)
 
-# @api_view(['POST'])
-# def signup(request):
-#     #만약 로그인 되어있으면, articles/로 리다이렉트
-#     # if request.user.is_authenticated:
-#     #     return Reponse(status=400)
+    movie_detail_serializer = MovieSerializer(movie)
+    return Response(movie_detail_serializer.data)
 
-#     serializer = UserSerializer(data=request.POST)
-#     if serializer.is_valid():
-#         serializer.save()
-#         return Response(serializer.data) #index 페이지로 리다이렉트
-#     else:
-#         return Response(status=400)
+# .../actor/
+@api_view(['GET'])
+def actor(request):
+    actors = Actor.objects.all()
 
-# # @api_view(['POST'])
-# # def create_auth(request):
-# #     serializer = UserSerializer(data=request.DATA)
-# #     if serializer.is_valid():
-# #         User.objects.create_user(
-# #             serializer.init_data['email'],
-# #             serializer.init_data['username'],
-# #             serializer.init_data['password']
-# #         )
-# #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-# #     else:
-# #         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+    actors_serializer = ActorSerializer(actors, many=True)
+    return Response(actors_serializer.data)
 
+# .../actor/pk/
+@api_view(['GET'])
+def actor_detail(request, actor_pk):
+    actor = get_object_or_404(Actor, pk=actor_pk)
 
+    actor_serializer = ActorSerializer(actor)
+    return Response(actor_serializer.data)
+
+# .../director/
+@api_view(['GET'])
+def director(request):
+    directors = Director.objects.all()
+
+    directors_serializer = DirectorSerializer(directors, many=True)
+    return Response(directors_serializer.data)
+
+# .../director/pk/
+@api_view(['GET'])
+def director_detail(request, director_pk):
+    director = get_object_or_404(Director, pk=director_pk)
+
+    director_serializer = DirectorSerializer(director)
+    return Response(director_serializer.data)
+
+# .../genre/
+@api_view(['GET'])
+def genre(request):
+    genres = Genre.objects.all()
+    genres_serializer = GenreSerializer(genres, many=True)
+    return Response(genres_serializer.data)
+
+# .../genre/pk/
+@api_view(['GET'])
+def genre_detail(request, genre_pk):
+    genre = get_object_or_404(Genre, pk=genre_pk)
+    genre_serializer = GenreSerializer(genre)
+    return Response(genre_serializer.data)

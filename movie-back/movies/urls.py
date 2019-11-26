@@ -15,4 +15,7 @@ urlpatterns = [
     path('genre/', views.genre, name='genre'),
     path('genre/<int:genre_pk>/', views.genre_detail, name='genre_detail'),
     path('worldcup/', views.random_worldcup, name='random_worldcup'),
+    path('worldcup/<int:worldcup_pk>/', views.worldcup_detail, name='worldcup_detail'),
+    path('worldcup/custom/', views.create_worldcup, name='create_worldcup'),
+    path('score_update/', views.score_update, name='score_update'),
 ]

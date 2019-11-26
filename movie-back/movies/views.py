@@ -81,10 +81,6 @@ def genre_detail(request, genre_pk):
     genre_serializer = GenreSerializer(genre)
     return Response(genre_serializer.data)
 
-# .../worldcup/
-@api_view(['POST'])
-def create_worldcup(request):
-    pass
 
 # .../worldcup/
 @api_view(['GET'])
@@ -100,3 +96,47 @@ def random_worldcup(request):
     # worldcup = Worldcup.create(random_movies)
     worldcup_serializer = WorldcupSerializer(worldcup)
     return Response(worldcup_serializer.data)
+
+# .../worldcup/pk/
+@api_view(['GET'])
+def worldcup_detail(request, worldcup_pk):
+    worldcup = get_object_or_404(Worldcup, pk=worldcup_pk)
+    worldcup_serializer = WorldcupSerializer(worldcup)
+    return Response(worldcup_serializer.data)
+
+# .../worldcup/custom/
+@api_view(['POST'])
+def create_worldcup(request):
+    serializer = WorldcupSerializer(data=request.POST)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(status=400)
+
+# .../score_update/
+@api_view(['POST'])
+def score_update(request):
+    '''
+    기대하는 request.POST 데이터 형태
+    {
+        'movie_pk': ?,
+        'worldcup_pk': ?,
+    }   
+    '''
+    data = request.POST
+    movie_pk = int(data.get('movie_pk'))
+    worldcup_pk = int(data.get('worldcup_pk'))
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    worldcup = get_object_or_404(Worldcup, pk=worldcup_pk)
+
+    target_record = Ranking.objects.get(movie=movie, worldcup=worldcup)
+    target_record.score += 1
+    target_record.save()
+
+    result = {
+        'movie_pk': movie_pk,
+        'worldcup': worldcup_pk,
+        'changed_score': target_record.score,
+    }
+
+    return Response(result)

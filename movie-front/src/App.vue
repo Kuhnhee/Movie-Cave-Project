@@ -14,7 +14,7 @@
             <v-list-item-title>Movie List</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/login">
           <v-list-item-action>
             <v-icon>mdi-alpha-w-box</v-icon>
           </v-list-item-action>
@@ -22,7 +22,7 @@
             <v-list-item-title>World Cup</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item link to="/login">
+        <v-list-item link to="/profile">
           <v-list-item-action>
             <v-icon>mdi-account</v-icon>
           </v-list-item-action>

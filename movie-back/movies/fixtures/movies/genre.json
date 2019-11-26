@@ -201,5 +201,12 @@
         "fields": {
             "name": "영화패러디포스터"
         }
+    },
+    {
+        "pk": 29,
+        "model": "movies.genre",
+        "fields": {
+            "name": "공연실황"
+        }
     }
 ]

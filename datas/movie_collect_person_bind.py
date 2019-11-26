@@ -124,9 +124,9 @@ for info in movie_dic:
 
             # Image URL (api에서 제공하는 url은 크기가 작아서 별도 url사용)
             url = IMG_URL+str(movie['pk'])
-            html = urrlib.request.urlopen(url)
-            soup = BeutifulSoup(html, 'lxml')
-            img_src_url = soup.find('img', 'targetImage')['src']
+            html = urllib.request.urlopen(url)
+            soup = BeautifulSoup(html, 'lxml')
+            img_src_url = soup.find('img')['src']
             fields['img_url'] = img_src_url
 
 

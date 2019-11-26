@@ -31,11 +31,13 @@ class Movie(models.Model):
     description = models.TextField()
     open_date = models.CharField(max_length=50)
     genres = models.ManyToManyField(Genre, related_name='movies', blank=True)
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='movies', blank=True)
 
 class Review(models.Model):
     content = models.CharField(max_length=40)
     score = models.IntegerField()
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 class Worldcup(models.Model):
     movies = models.ManyToManyField(Movie, related_name='worldcups', blank=True)

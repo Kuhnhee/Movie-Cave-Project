@@ -14,4 +14,5 @@ urlpatterns = [
     path('director/<int:director_pk>/', views.director_detail, name='director_detail'),
     path('genre/', views.genre, name='genre'),
     path('genre/<int:genre_pk>/', views.genre_detail, name='genre_detail'),
+    path('worldcup/', views.random_worldcup, name='random_worldcup'),
 ]

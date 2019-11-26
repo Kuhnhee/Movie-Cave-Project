@@ -1,5 +1,7 @@
 <template>
   <div id="login">
+    <h1>Log in</h1>
+    <br>
     <LoginForm />
   </div>
 </template>
@@ -8,7 +10,7 @@
 import LoginForm from '@/components/LoginForm.vue'
 
 export default {
-  name: 'Login',
+  name: 'login',
   components: {
     LoginForm,
   },

@@ -1,15 +1,11 @@
 <template>
-  <div >
-    <v-container v-for="movie in movies" :key="movie.id">
-      <v-card
-        class="mx-auto"
-        max_width="400"
-      >
-
-          <v-card-title>{{ movie.title }}</v-card-title>
-        
-      </v-card>
-    </v-container>
+  <div class="movie-list">
+    <h2>Movie List</h2>
+    <div class="card" v-for="movie in movies" :key="movie.id">
+      <div class="card-body">
+        <span>{{ movie.title }}</span>
+      </div>
+    </div>
   </div>
 </template>
 

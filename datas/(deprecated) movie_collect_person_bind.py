@@ -123,12 +123,7 @@ for info in movie_dic:
             fields['actors'] = actors_code
 
             # Image URL (api에서 제공하는 url은 크기가 작아서 별도 url사용)
-            url = IMG_URL+str(movie['pk'])
-            html = urrlib.request.urlopen(url)
-            soup = BeutifulSoup(html, 'lxml')
-            img_src_url = soup.find('img', 'targetImage')['src']
-            fields['img_url'] = img_src_url
-
+            fields['img_url'] = IMG_URL+str(movie['pk'])
 
             url=NAVER_URL+v
             html=urllib.request.urlopen(url)

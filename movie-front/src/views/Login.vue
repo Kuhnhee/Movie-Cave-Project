@@ -1,9 +1,7 @@
 <template>
-  <div id="login">
-    <h1>Log in</h1>
-    <br>
+  <v-col id="login">
     <LoginForm />
-  </div>
+  </v-col>
 </template>
 
 <script>

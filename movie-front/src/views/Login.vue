@@ -1,7 +1,7 @@
 <template>
-  <v-col id="login">
+  <div id="login">
     <LoginForm />
-  </v-col>
+  </div>
 </template>
 
 <script>

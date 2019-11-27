@@ -3,19 +3,31 @@ from django.contrib.auth import get_user_model
 from django.views.decorators.http import require_POST
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
+from rest_framework.permissions import AllowAny # 회원가입은 인증 X
 
 from .models import *
 from .serializers import *
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 
 import random
 
-# .../users/pk/
-@api_view(['GET'])
-def user_detail(request, user_pk):
-    user = get_object_or_404(get_user_model(), pk=user_pk)
+# .../user/
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def signup(request):
+    serializer = UserCreationSerializer(data=request.data)
+    if serializer.is_valid():
+        user=serializer.save()
+        user.set_password(user.password)
+        user.save()
+        return Response(status=200, data={'message': '회원가입 성공'})
 
+
+# .../my_movies/
+@api_view(['GET'])
+def my_movies(request):
+    user = request.user
     user_serializer = UserSerializer(user)
     return Response(user_serializer.data)
 

@@ -1,0 +1,69 @@
+<template>
+  <div class="signup-form mx-auto">
+    <h1>Signup</h1>
+
+    <form class="signup-input" @submit.prevent="signup(userInput)">
+      <div v-if="getErrors.length" class="error-list alert alert-danger">
+        <p></p>
+        <ul>
+          <li v-for="(error, idx) in getErrors" :key="idx">{{ error }}</li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <v-text-field v-model="userInput.username" label="Username" name="Username"></v-text-field>
+      </div>
+
+      <div class="form-group">
+        <v-text-field v-model="userInput.email" label="Email" name="Email"></v-text-field>
+      </div>
+
+      <div class="form-group">
+        <v-text-field
+          v-model="userInput.password"
+          label="Password"
+          name="Password"
+          type="password"
+        ></v-text-field>
+      </div>
+
+      <div class="form-group">
+        <v-text-field
+          v-model="userInput.passwordConfirmation"
+          label="Password Confirmation"
+          name="passwordConfirmation"
+          type="password"
+        ></v-text-field>
+      </div>
+
+      <button class="btn btn-light">Register</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapActions } from "vuex";
+
+export default {
+  name: "SignupForm",
+  data() {
+    return {
+      userInput: {
+        username: "",
+        email:"",
+        password: "",
+        passwordConfirmation: ""
+      }
+    };
+  },
+  methods: {
+    ...mapActions(["signup"])
+  },
+  computed: {
+    ...mapGetters(["getErrors"])
+  }
+};
+</script>
+
+<style>
+</style>

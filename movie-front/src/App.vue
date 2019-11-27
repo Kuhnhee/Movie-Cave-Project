@@ -50,7 +50,7 @@
           align="center"
           justify="center"
         >
-          <v-col class="col-4">
+          <v-col>
             <router-view></router-view>
           </v-col>
         </v-row>

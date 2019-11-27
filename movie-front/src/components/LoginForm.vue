@@ -1,18 +1,24 @@
 <template>
-  <div>
-    <div class="form-group">
-      <label for="id">아이디</label>
-      <input v-model="credentials.username" type="text" id="id" class="form-control" placeholder="아이디를 입력해주세요.">
-    </div>
+  <form class="col-4 mx-auto">
+    <h1>Log in</h1>
+    <v-text-field
+      v-model="credentials.username"
+      label="Username"
+      name="Username"
+      required
+    >
+    </v-text-field>
+    <v-text-field
+      v-model="credentials.password"
+      label="password"
+      name="Password"
+      type="password"
+      required
+    >
+    </v-text-field>
     <br>
-    <div class="form-group">
-      <label for="id">비밀번호</label>
-      <input v-model="credentials.password" type="password" id="password" class="form-control" placeholder="비밀번호를 입력해주세요.">
-    </div>
-    <br>
-    <button @click="login()" class="btn btn-primary">로그인</button>
-
-  </div>
+    <v-btn light large block @click="login()">Login</v-btn>
+  </form>
 </template>
 
 <script>

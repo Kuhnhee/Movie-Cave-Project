@@ -9,7 +9,7 @@
           <li v-for="(error, idx) in getErrors" :key="idx">{{ error }}</li>
         </ul>
       </div>
-
+      <br>
       <div class="form-group">
         <v-text-field v-model="userInput.username" label="Username" name="Username"></v-text-field>
       </div>
@@ -36,7 +36,7 @@
         ></v-text-field>
       </div>
 
-      <button class="btn btn-light">Register</button>
+      <button>Register</button>
     </form>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
   },
   computed: {
     ...mapGetters(["getErrors"])
-  }
+  },
 };
 </script>
 

@@ -1,11 +1,10 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth import get_user_model
-
 from .models import *
 
 # from django.contrib.auth.models import User
-
+User = get_user_model()
 
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
@@ -37,11 +36,16 @@ class WorldcupSerializer(serializers.ModelSerializer):
         model = Worldcup
         fields = ('id', 'movies')
 
+class UserCreationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'password',)
+
 class UserSerializer(serializers.ModelSerializer):
     review_set = ReviewSerializer(many=True)
     movies = MovieSerializer(many=True)
     class Meta:
-        model = get_user_model()
+        model = User
         fields = ('id', 'username', 'review_set', 'movies')
 
     

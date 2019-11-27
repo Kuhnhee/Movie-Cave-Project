@@ -1,54 +1,62 @@
 <template>
-  <form class="col-4 mx-auto">
+  <div class="login-form mx-auto">
     <h1>Log in</h1>
-    <v-text-field
-      v-model="credentials.username"
-      label="Username"
-      name="Username"
-      required
-    >
-    </v-text-field>
-    <v-text-field
-      v-model="credentials.password"
-      label="password"
-      name="Password"
-      type="password"
-      required
-    >
-    </v-text-field>
-    <br>
-    <v-btn light large block @click="login()">Login</v-btn>
-  </form>
+
+    <div v-if="isLoading" class="spinner-border" role="status">
+      <span class="sr-only">Loading</span>
+    </div>
+
+    <form v-else class="login-input" @submit.prevent="login(credentials)">
+      <div v-if="getErrors.length" class="error-list alert alert-danger">
+        <p>아래의 오류를 해결해 주세요</p>
+        <ul>
+          <li v-for="(error, idx) in getErrors" :key="idx">
+            {{ error }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-group">
+        <v-text-field v-model="credentials.username" label="Username" name="Username"></v-text-field>
+      </div>
+
+      <div class="form-group">
+        <v-text-field
+          v-model="credentials.password"
+          label="Password"
+          name="Password"
+          type="password"
+        ></v-text-field>
+      </div>
+
+      <button class="btn btn-light">로그인</button>
+    </form>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
-import router from '@/router'
+// import router from '../router';  // '../router/index.js'
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "LoginForm",
   data() {
     return {
-      credentials: {},
-      passwordRules: [
-        (v) => !!v || 'Password is required',
-      ],
-      usernameRules: [
-        (v) => !!v || 'Username is required',
-      ],
-    }
+      credentials: {
+        // id,password 에 해당하는 data
+        username: "",
+        password: ""
+        // loading: 0,
+      }
+    };
   },
   methods: {
-    login() {
-      axios.post('http://localhost:8000/api-token-auth/', this.credentials)
-      .then(res => {
-        this.$session.start()
-        this.$session.set('jwt', res.data.token)
-        router.push('/')
-      })
-    }
+    ...mapActions(['login'])
   },
-}
+  computed: {
+    ...mapGetters(['getErrors', 'isLoading'])
+  }
+};
 </script>
 
 <style>

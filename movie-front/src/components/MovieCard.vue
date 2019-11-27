@@ -1,4 +1,5 @@
 <template>
+
   <v-hover v-slot:default="{ hover }">
     <v-card class="movie-card">
 
@@ -42,7 +43,10 @@
 
         <v-dialog v-model=dialog width="600px">
           <template v-slot:activator="{ on }">
-            <v-btn small v-on="on">Detail</v-btn>
+            <v-btn small v-on="on">
+              <v-icon>mdi-file-document-box-search-outline</v-icon>Detail
+
+            </v-btn>
           </template>
           <MovieDetailModal :movie="movie" @closeDialogEvent="closeDialog"/>
         </v-dialog>
@@ -54,6 +58,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
   import jwtDecode from 'jwt-decode'
   import MovieDetailModal from '@/components/MovieDetailModal.vue'
 
@@ -81,28 +86,56 @@
         console.log(user_id)
       },
 
-      closeDialog(){
+      closeDialog() {
         this.dialog = false
+      },
+
+      // rating한 적이 있는 영화는 별점 표시 (mount되는 시점에서 실행되는 함수)
+      ratingCheck() {
+        console.log("별점 확인하자")
       }
+
     },
 
-    // watch: {
-    //   rating: { //rating값이 변경될 경우 handler() 함수 실행
-    //     handler(rating) {
-    //       // rating이 변경될 때마다, 데이터베이스 변경을 위한 API 호출
-    //       rating++
-    //     },
-    //     deep: true
-    //   }
-    // }
+    watch: {
+      rating: { //rating값이 변경될 경우 handler() 함수 실행
+        handler(rating) {
+          // rating이 변경될 때마다, 데이터베이스 변경을 위한 API 호출
+          const token = this.$session.get('jwt')
+          const options = {
+            headers: {
+              Authorization: 'JWT ' + token
+            },
+            body: {
+              score: rating
+            }
+          }
+
+          axios.post(`http://localhost:8000/api/v1/review/star/`, options)
+          .then(res => {
+            console.log(res)
+          })
+          .catch(error => {
+            console.log(error.response)
+          })
+
+        }, //end of handler
+        deep: true
+      } //end of rating watch
+
+    }, // watch end
     
+    mounted() {
+      this.ratingCheck()
+    }
+
   }
 </script>
 
 <style>
 .v-card--reveal {
   align-items: center;
-  bottom: 20%;
+  bottom: 18%;
   justify-content: center;
   opacity: 0.8;
   position: absolute;

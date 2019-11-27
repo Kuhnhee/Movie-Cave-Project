@@ -1,6 +1,9 @@
 <template>
+  <!-- <v-responsive
+    class="overflow-y-auto"
+    max-height="600"
+  > -->
   <div class="movie-list">
-
     <v-card
       class="mx-auto"
       max-width="800"
@@ -19,23 +22,29 @@
       </v-toolbar>
 
       <v-container fluid v-if="movies.length">
+        <!-- <v-lazy> -->
         <v-row dense>
-          <v-col
-            v-for="movie in movies"
-            :key="movie.id"
-            :cols="col_flex"
-            sm="6"
-            md="3"
-          >
-          <v-lazy>
-            <MovieCard :movie="movie"/>
-          </v-lazy>
-          </v-col>
+          <!-- <v-lazy> -->
+            <v-col
+              v-for="movie in movies"
+              :key="movie.id"
+              :cols="col_flex"
+              md="3"
+            >
+              <v-lazy
+                transition="fade-transition"
+              >
+                <MovieCard :movie="movie"/>
+              </v-lazy>
+            </v-col>
+          <!-- </v-lazy> -->
         </v-row>
+        <!-- </v-lazy> -->
       </v-container>
     </v-card>
 
   </div>
+  <!-- </v-responsive> -->
 </template>
 
 <script>
@@ -53,10 +62,12 @@ export default {
   },
   data() {
     return {
-      col_flex: 3
+      col_flex: 3,
     }
   },
 }
+
+
 </script>
 
 <style>

@@ -5,30 +5,24 @@ function makeTokenHeader(token) {
     return {'Aurhorization': `JWT ${token}`}
 }
 
-// auth.js  인증관련 모든 State 를 작성.
 const state = {
     movies: [],
+    reviews: [],
 };
 
 const getters = {
     getAllMovies (state) {
         return state.Movies;
     },
-    getFinishedTodos(state) {
-        return state.todos.filter(todo => todo.completed)
-    },
-    getLeftTodos(state) {
-        return state.todos.filter(todo => !todo.completed)
-    }
 };
 
 const mutations = {
-    pushTodo(state, todo) {
-        state.todos.push(todo);
+    pushTodo(state, movie) {
+        state.movies.push(movie);
     },
     
-    changeTodos (state, todos) {
-        state.todos = todos;
+    changeMovies (state, movies) {
+        state.movies = movies;
     }
 };
 
@@ -36,7 +30,7 @@ const actions = {
     refreshTodos: ({ commit }, token) => {
         axios.get(HOST + '/api/v1/my_movies/', makeTokenHeader(token))  // 맨 위에 따로 정의한 함수
             .then(res => {
-                commit('changeTodos', res.data);
+                commit('changeMovies', res.data);
             })
             .catch(err => console.error(err));
     },

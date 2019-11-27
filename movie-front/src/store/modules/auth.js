@@ -37,6 +37,7 @@ const actions = {
     },
 
     login: ({ commit, getters }, credentials) => {
+        commit('clearErrors')
         if (getters.isLoggedIn) {
             router.push('/');
         }

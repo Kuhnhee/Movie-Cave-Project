@@ -15,6 +15,7 @@ export default {
   props: {
     reviews: {
       type: Array,
+      
     }
   }
 }

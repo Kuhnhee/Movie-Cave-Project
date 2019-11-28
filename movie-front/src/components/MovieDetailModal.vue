@@ -39,6 +39,29 @@
         </v-expansion-panel>
       </v-expansion-panels>
       
+      <v-card-text>
+        <div><b>평가</b></div>
+        <ul style="list-style: none;">
+          <li v-for="review in reviews" :key=review.id>
+            <v-row>
+              <v-rating
+                :value="review.score"
+                background-color="white"
+                color="yellow accent-4"
+                dense
+                size="8"
+                readonly
+              ></v-rating>
+              <div>
+                | {{ review.content }}
+                <i style="font-size:12px;"> by {{ review.user }}</i>
+              </div> 
+
+             </v-row>
+          </li>
+        </ul>
+
+      </v-card-text>
 
     </v-container>
 
@@ -57,6 +80,7 @@ export default {
     return {
       directors: [],
       actors: [],
+      reviews: [],
     }
   },
 
@@ -108,11 +132,31 @@ export default {
       })
     },
 
+    reviewsCall() {
+      const token = sessionStorage.getItem('jwt')
+      const options = {
+        headers: {
+          Authorization: 'JWT ' + token
+        }
+      }
+      axios.get(`http://localhost:8000/api/v1/review/movie/${this.movie.id}/`, options)
+      .then(res => {
+        this.reviews = res.data
+        this.reviews.forEach(review => {
+          axios.get(`http://localhost:8000/api/v1/user/${review.user}/`, options)
+          .then(res => {
+            review.user = res.data.username
+          })
+        })
+      })
+    }
+
   }, //end of methods
 
   mounted() {
     this.directorsNameCall()
     this.actorsNameCall()
+    this.reviewsCall()
   }
 }
 </script>

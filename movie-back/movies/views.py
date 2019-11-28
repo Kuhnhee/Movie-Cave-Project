@@ -24,6 +24,12 @@ def signup(request):
         user.save()
         return Response(status=200, data={'message': '회원가입 성공'})
 
+# .../user/user_pk/
+@api_view(['GET'])
+def user_info(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    user_serializer = UserSerializer(user)
+    return Response(user_serializer.data)
 
 # .../my_movies/
 @api_view(['GET'])
@@ -162,6 +168,26 @@ def review_create(request):
         review_serializer.save()
         return Response(review_serializer.data)
     return Response(status=400)
+
+# .../review/movie/movie_pk/
+@api_view(['GET'])
+def review_movie(request, movie_pk):
+    # movie_pk에 달려있는 모든 리뷰를 가져온다.
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    reviews = movie.review_set
+
+    reviews_serializer = ReviewSerializer(reviews, many=True)
+    return Response(reviews_serializer.data)
+
+# .../review/user/user_pk/
+@api_view(['GET'])
+def review_user(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    reviews = user.review_set
+
+    reviews_serializer = ReviewSerializer(reviews, many=True)
+    return Response(reviews_serializer.data)
+
 
 # for infinite scroll(Pagination)
 class MoviePagination(pagination.PageNumberPagination):

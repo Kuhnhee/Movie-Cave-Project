@@ -139,26 +139,6 @@ export default {
       })
     },
 
-    // reviewsCall() {
-    //   const token = sessionStorage.getItem('jwt')
-    //   const options = {
-    //     headers: {
-    //       Authorization: 'JWT ' + token
-    //     }
-    //   }
-    //   axios.get(`http://localhost:8000/api/v1/review/movie/${this.movie.id}/`, options)
-    //   .then(res => {
-    //     this.reviews = res.data
-    //     this.reviews.forEach(review => {
-    //       axios.get(`http://localhost:8000/api/v1/user/${review.user}/`, options)
-    //       .then(res => {
-    //         review.username = res.data.username
-    //         console.log(review)
-    //       })
-    //     })
-    //   })
-    // },
-
     reviewDelete(event, review) {
       const token = sessionStorage.getItem('jwt')
       const options = {
@@ -170,8 +150,6 @@ export default {
       .then(() => {
         this.$emit('reviewUpdateEvent', true)
       })
-
-      
     },
 
   }, //end of methods

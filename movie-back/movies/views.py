@@ -105,7 +105,7 @@ def genre_detail(request, genre_pk):
 @api_view(['GET'])
 def random_worldcup(request):
     # random & filterting 자료 https://stackoverflow.com/questions/32389519/django-get-10-random-instances-from-a-queryset-and-order-them-into-a-new-querys
-    random_movies = random.sample(list(Movie.objects.all()), 32)
+    random_movies = random.sample(list(Movie.objects.all()), 8)
     # random_movies = Movie.objects.all().order_by('?')[:32]
 
     worldcup = Worldcup()

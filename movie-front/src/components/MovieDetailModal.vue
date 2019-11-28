@@ -56,7 +56,7 @@
                 | {{ review.content }}
                 <i style="font-size:12px;"> by {{ review.username }}</i>
               </div>
-              <v-btn v-on:click="reviewDelete($event, review)">
+              <v-btn small v-on:click="reviewDelete($event, review)">
                 삭제
               </v-btn>
 

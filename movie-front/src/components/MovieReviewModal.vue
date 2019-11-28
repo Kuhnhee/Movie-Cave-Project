@@ -63,6 +63,7 @@ export default {
       const token = sessionStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const reviewURL = 'http://localhost:8000/api/v1/review/'
+      const preferenceURL = 'http://localhost:8000/api/v1/preference/'
       const options = {
         headers: {
           Authorization: 'JWT ' + token
@@ -79,6 +80,17 @@ export default {
         this.$emit('reviewUpdateEvent', true)
       })
       
+      //취향점수 반영을 위한 API 호출
+      const prefData= {
+        value: this.rating,
+        genres: this.movie.genres,
+        user: user_id
+      }
+      axios.post(preferenceURL, prefData, options)
+      .then(res=>{
+        console.log(res)
+      })
+
       
     }
   },

@@ -30,7 +30,7 @@
         v-model="review_dialog_show"
         max-width="500"
       >
-        <MovieReviewModal :rating="rating" :movie="movie" @closeDialogEvent="closeReviewDialog"/>
+        <MovieReviewModal :rating="rating" :movie="movie" @reviewUpdateEvent="ratingCheck" @closeDialogEvent="closeReviewDialog"/>
       </v-dialog>
 
 
@@ -57,7 +57,7 @@
               <v-icon>mdi-file-document-box-search-outline</v-icon>Detail
             </v-btn>
           </template>
-          <MovieDetailModal :movie="movie" @closeDialogEvent="closeDetailDialog"/>
+          <MovieDetailModal :movie="movie" :reviews="reviews" @reviewUpdateEvent="ratingCheck" @closeDialogEvent="closeDetailDialog"/>
         </v-dialog>
 
 
@@ -94,11 +94,6 @@
     },
 
     methods: {
-      getUser() {
-        const token = sessionStorage.getItem('jwt')
-        const user_id = jwtDecode(token).user_id
-        console.log(user_id)
-      },
 
       closeDetailDialog() {
         this.detail_dialog_show = false
@@ -128,6 +123,10 @@
             if (review.user === user_id) {
               this.rating = review.score
             }
+            axios.get(`http://localhost:8000/api/v1/user/${review.user}/`, options)
+            .then(res => {
+              review.username = res.data.username
+            })
           })
         })
       } // end of ratingCheck()

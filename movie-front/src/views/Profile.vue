@@ -40,6 +40,7 @@ export default {
       username: null,
       my_reviews: [],
       my_movies: [],
+      reviews_info: [],
     }
   },
 
@@ -60,9 +61,20 @@ export default {
       }
       axios.get(HOST+'/api/v1/my_movies/', options)
       .then(res => {
-        console.log(res)
-        this.my_reviews = res.data.review_set
-        this.my_movies = res.data.movies
+        this.reviews_info = res.data.review_set
+        this.reviews_info.forEach(review => {
+          axios.get(`http://localhost:8000/api/v1/movie/${review.movie}/`, options)
+          .then(result => {
+            this.my_movies.push(result.data)
+            const new_info = {
+              movie: result.data.title,
+              score: review.score,
+              content: review.content
+            }
+            this.my_reviews.push(new_info)
+          })
+        })
+        console.log(this.reviews_info)
       })
       .catch(err => console.log(err))
     }

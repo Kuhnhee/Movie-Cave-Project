@@ -1,5 +1,5 @@
 <template>
-  <v-simple-table fixed-header height="300px">
+  <v-simple-table fixed-header height="200px">
     <template v-slot:default>
       <thead>
         <tr>
@@ -9,8 +9,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="review in reviews" :key="review.pk">
-          <td>{{ review.score }}</td>
+        <tr v-for="review in my_reviews" :key="review.pk">
+          <td class="text-center">
+            <v-rating
+              :v-model="review.score"
+              color="orange"
+              >
+            </v-rating>
+          </td>
           <td>{{ review.movie }}</td>
           <td>{{ review.content }}</td>
         </tr>
@@ -22,10 +28,10 @@
 <script>
 export default {
   name: 'ReviewList',
-  data() {
-    return {
-      reviews: sessionStorage.getItem('my_reviews')
-    }
+  props: {
+    my_reviews: {
+			type:Array
+		}
   }
 }
 </script>

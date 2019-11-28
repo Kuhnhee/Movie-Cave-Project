@@ -21,7 +21,7 @@
           <v-text-field label="코멘트" v-model="new_comment"></v-text-field>
         </v-col>
         <v-col cols="3" class="mt-3">
-          <v-btn @click="writeComment" @click.prevent="closeDialog">
+          <v-btn @click="createReview">
             <v-icon>mdi-pencil</v-icon>입력하기
           </v-btn>
         </v-col>
@@ -59,29 +59,26 @@ export default {
     closeDialog() {
       this.$emit('closeDialogEvent', true)
     },
-
-    writeComment() {
+    createReview() {
       const token = sessionStorage.getItem('jwt')
+      const reviewURL = 'http://localhost:8000/api/v1/review/'
       const user_id = jwtDecode(token).user_id
-      console.log(token)
-
-      const headers = {'Authorization': `JWT ${token}`}
-      const review = {
-        'content': this.new_comment,
-        'scoore': this.rating,
-        'movie': this.movie.id,
-        'user': user_id
+      const options = {
+        headers: {
+          Authorization: 'JWT ' + token
+        }
       }
-
-      axios.post('http://localhost:8000/api/v1/review/', review, headers)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(error => {
-        console.log(error.response)
-      })
+      const data= {
+          content: this.new_comment,
+          score: this.rating,
+          movie_id: this.movie.id,
+          user_id: user_id
+        }
+      console.log(reviewURL, data, options)
+      axios.post(reviewURL, data, options)
+      .then(res => console.log(res))
+      
     }
-
   },
 
 }

@@ -1,17 +1,19 @@
 <template>
   <div class="mx-auto" id="profile">
-    <h2>    {{ username }}'s Profile</h2>
+    <h2>{{ username }}'s Profile</h2>
     <v-container>
       <v-row
         justify="center"
       >
         <v-col cols="6">
           <h3>Movie Timeline</h3>
-          <Timeline/>
+          <Timeline :my_movies="my_movies"/>
         </v-col>
         <v-col  cols="6">
           <h3>Review List</h3>
-          <ReviewList/>
+          <ReviewList :my_reviews="my_reviews"/>
+          <br>
+          <RecommandList/>
         </v-col>
       </v-row>
     </v-container>
@@ -23,28 +25,46 @@
 <script>
 import Timeline from '../components/Timeline'
 import ReviewList from '../components/ReviewList'
-import { mapGetters, mapActions } from 'vuex';
+import RecommandList from '../components/RecommandList'
+import { mapGetters } from 'vuex';
 import router from '../router';
+import axios from 'axios'
+
+const HOST = process.env.VUE_APP_SERVER_HOST;
 
 export default {
   name: "profile",
   
   data () {
     return {
-      username: sessionStorage.getItem('username')
+      username: null,
+      my_reviews: [],
+      my_movies: [],
     }
   },
 
   components: {
     Timeline,
     ReviewList,
+    RecommandList,
   },
 
   methods: {
-    ...mapActions(['refreshInfo', 'refreshMovie']),
     getInfo() {
+      this.username = sessionStorage.getItem('username')
       const token = sessionStorage.getItem('jwt')
-      this.refreshInfo(token)
+      const options = {
+        headers: {
+          Authorization: `JWT ${token}`
+        }
+      }
+      axios.get(HOST+'/api/v1/my_movies/', options)
+      .then(res => {
+        console.log(res)
+        this.my_reviews = res.data.review_set
+        this.my_movies = res.data.movies
+      })
+      .catch(err => console.log(err))
     }
   }, 
 

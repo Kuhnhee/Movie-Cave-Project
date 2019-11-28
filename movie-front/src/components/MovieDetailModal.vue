@@ -54,8 +54,11 @@
               ></v-rating>
               <div>
                 | {{ review.content }}
-                <i style="font-size:12px;"> by {{ review.user }}</i>
-              </div> 
+                <i style="font-size:12px;"> by {{ review.username }}</i>
+              </div>
+              <v-btn v-on:click="reviewDelete($event, review)">
+                삭제
+              </v-btn>
 
              </v-row>
           </li>
@@ -80,13 +83,17 @@ export default {
     return {
       directors: [],
       actors: [],
-      reviews: [],
+      target_review: null,
     }
   },
 
   props: {
     movie: {
       type: Object,
+      required: false,
+    },
+    reviews: {
+      type: Array,
       required: false,
     }
   },
@@ -132,32 +139,52 @@ export default {
       })
     },
 
-    reviewsCall() {
+    // reviewsCall() {
+    //   const token = sessionStorage.getItem('jwt')
+    //   const options = {
+    //     headers: {
+    //       Authorization: 'JWT ' + token
+    //     }
+    //   }
+    //   axios.get(`http://localhost:8000/api/v1/review/movie/${this.movie.id}/`, options)
+    //   .then(res => {
+    //     this.reviews = res.data
+    //     this.reviews.forEach(review => {
+    //       axios.get(`http://localhost:8000/api/v1/user/${review.user}/`, options)
+    //       .then(res => {
+    //         review.username = res.data.username
+    //         console.log(review)
+    //       })
+    //     })
+    //   })
+    // },
+
+    reviewDelete(event, review) {
       const token = sessionStorage.getItem('jwt')
       const options = {
         headers: {
           Authorization: 'JWT ' + token
         }
       }
-      axios.get(`http://localhost:8000/api/v1/review/movie/${this.movie.id}/`, options)
+      axios.get(`http://localhost:8000/api/v1/review/delete/${review.id}/`, options)
       .then(res => {
-        this.reviews = res.data
-        this.reviews.forEach(review => {
-          axios.get(`http://localhost:8000/api/v1/user/${review.user}/`, options)
-          .then(res => {
-            review.user = res.data.username
-          })
-        })
+        console.log(res)
       })
-    }
+
+      this.$emit('reviewUpdateEvent', true)
+    },
 
   }, //end of methods
 
   mounted() {
     this.directorsNameCall()
     this.actorsNameCall()
-    this.reviewsCall()
-  }
+    // this.reviewsCall()
+  },
+
+  // updated() {
+  //   this.reviewsCall()
+  // }
 }
 </script>
 

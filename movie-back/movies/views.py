@@ -169,6 +169,13 @@ def review_create(request):
         return Response(review_serializer.data)
     return Response(status=400)
 
+# .../review/delete/review_pk/
+@api_view(['GET'])
+def review_delete(request, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    review.delete()
+    return Response(status=200)
+
 # .../review/movie/movie_pk/
 @api_view(['GET'])
 def review_movie(request, movie_pk):

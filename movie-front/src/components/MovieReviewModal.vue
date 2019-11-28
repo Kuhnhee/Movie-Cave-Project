@@ -21,7 +21,7 @@
           <v-text-field label="코멘트" v-model="new_comment"></v-text-field>
         </v-col>
         <v-col cols="3" class="mt-3">
-          <v-btn @click="createReview">
+          <v-btn @click="createReview" @click.stop="closeDialog">
             <v-icon>mdi-pencil</v-icon>입력하기
           </v-btn>
         </v-col>
@@ -77,6 +77,7 @@ export default {
       axios.post(reviewURL, data, options)
       .then(res => console.log(res))
       
+      this.$emit('reviewUpdateEvent', true)
     }
   },
 

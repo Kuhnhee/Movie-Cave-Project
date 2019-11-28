@@ -12,7 +12,7 @@
         <tr v-for="review in my_reviews" :key="review.pk">
           <td class="text-center">
             <v-rating
-              :v-model="review.score"
+              :value="review.score"
               color="orange"
               >
             </v-rating>

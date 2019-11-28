@@ -5,6 +5,7 @@ app_name = "movies"
 
 urlpatterns = [
     path('user/', views.signup, name='signup'),
+    path('user/<int:user_pk>/', views.user_info, name='user_info'),
     path('my_movies/', views.my_movies, name='my_movies'),
     path('movie/', views.movie, name='movie'),
     path('movie/<int:movie_pk>/', views.movie_detail, name='movie_detail'),
@@ -20,6 +21,9 @@ urlpatterns = [
     path('score_update/', views.score_update, name='score_update'),
 
     path('review/', views.review_create, name='review_create'),
-    # for infinite scroll
+    path('review/movie/<int:movie_pk>/', views.review_movie, name='review_movie'),
+    path('review/user/<int:user_pk>/', views.review_user, name='review_user'),
+
+    # api for infinite scrolling
     path('movie/list/', views.MovieListAPI.as_view(), name='movie_list'),
 ]

@@ -13,7 +13,7 @@
 
       <v-expand-transition>
         <div 
-          v-if="hover"
+          v-if="hover || rating !== 0"
           class="d-flex transition-fast-in-fast-out black darken-2 text-center display-1 v-card--reveal"
           @click.stop="review_dialog_show=true"
         >
@@ -68,13 +68,14 @@
 </template>
 
 <script>
-  // import axios from 'axios'
+  import axios from 'axios'
   import jwtDecode from 'jwt-decode'
   import MovieDetailModal from '@/components/MovieDetailModal.vue'
   import MovieReviewModal from '@/components/MovieReviewModal.vue'
 
   export default {
     data: () => ({
+      reviews: [],
       rating: 0,
       detail_dialog_show: false,
       review_dialog_show: false,
@@ -109,43 +110,31 @@
       
       // rating한 적이 있는 영화는 별점 표시 (mount되는 시점에서 실행되는 함수)
       ratingCheck() {
-        console.log("영화 몇 개 로드됐나?")
-      }
+        // console.log("영화 몇 개 로드됐나?")
+
+        // 현재 영화의 리뷰 목록에서 현재 로그인한 사람의 id를 찾아본다.
+        const token = sessionStorage.getItem('jwt')
+        const user_id = jwtDecode(token).user_id
+        const options = {
+          headers: {
+            Authorization: 'JWT ' + token
+          }
+        }
+
+        axios.get(`http://localhost:8000/api/v1/review/movie/${this.movie.id}/`, options)
+        .then(res => {
+          this.reviews = res.data
+          this.reviews.forEach(review => {
+            if (review.user === user_id) {
+              this.rating = review.score
+            }
+          })
+        })
+      } // end of ratingCheck()
 
     },
 
     watch: {
-      // review_dialog_show: {
-      //   handler(review_dialog_show) {
-      //     console.log(review_dialog_show)
-      //     console.log(this.rating)
-      //   }
-      // }
-
-      // rating: { //rating값이 변경될 경우 handler() 함수 실행
-      //   handler(rating) {
-      //     // rating이 변경될 때마다, 데이터베이스 변경을 위한 API 호출
-      //     const token = sessionStorage.getItem('jwt')
-      //     const options = {
-      //       headers: {
-      //         Authorization: 'JWT ' + token
-      //       },
-      //       body: {
-      //         score: rating
-      //       }
-      //     }
-
-      //     axios.post(`http://localhost:8000/api/v1/review/star/`, options)
-      //     .then(res => {
-      //       console.log(res)
-      //     })
-      //     .catch(error => {
-      //       console.log(error.response)
-      //     })
-
-      //   }, //end of handler
-      //   deep: true
-      // } //end of rating watch
 
     }, // watch end
     

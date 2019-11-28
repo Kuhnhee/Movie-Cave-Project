@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny # 회원가입은 인증 X
 
 from .models import *
 from .serializers import *
+from rest_framework import pagination, generics, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 
@@ -152,3 +153,15 @@ def score_update(request):
     }
 
     return Response(result)
+
+
+
+# for infinite scroll(Pagination)
+class MoviePagination(pagination.PageNumberPagination):
+    page_size = 20
+
+# for infinite scroll(ListAPIView)
+class MovieListAPI(generics.ListAPIView):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    pagination_class = MoviePagination

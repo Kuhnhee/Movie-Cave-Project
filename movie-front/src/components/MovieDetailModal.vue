@@ -50,7 +50,6 @@
             <v-icon>mdi-pencil</v-icon>입력하기
           </v-btn>
         </v-col>
-
       </v-row>
       
 
@@ -88,7 +87,7 @@ export default {
     },
 
     directorsNameCall() {
-      const token = this.$session.get('jwt')
+      const token = sessionStorage.getItem('jwt')
       const options = {
         headers: {
           Authorization: 'JWT ' + token
@@ -106,7 +105,7 @@ export default {
     },
 
     actorsNameCall() {
-      const token = this.$session.get('jwt')
+      const token = sessionStorage.getItem('jwt')
       const options = {
         headers: {
           Authorization: 'JWT ' + token
@@ -124,7 +123,7 @@ export default {
     },
 
     writeComment() {
-      const token = this.$session.get('jwt')
+      const token = sessionStorage.getItem('jwt')
       const options = {
         headers: {
           Authorization: 'JWT ' + token

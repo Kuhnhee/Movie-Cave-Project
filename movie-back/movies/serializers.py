@@ -29,7 +29,7 @@ class MovieSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ('id', 'content', 'score', 'movie',)
+        fields = ('id', 'content', 'score', 'movie', 'user')
     
 class WorldcupSerializer(serializers.ModelSerializer):
     class Meta:

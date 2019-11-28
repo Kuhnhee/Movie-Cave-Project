@@ -39,25 +39,12 @@
         </v-expansion-panel>
       </v-expansion-panels>
       
-      <v-divider></v-divider>
-
-      <v-row>
-        <v-col cols="9">
-          <v-text-field label="댓글" v-model="new_comment"></v-text-field>
-        </v-col>
-        <v-col cols="3" class="mt-3">
-          <v-btn @click="writeComment">
-            <v-icon>mdi-pencil</v-icon>입력하기
-          </v-btn>
-        </v-col>
-      </v-row>
-      
 
     </v-container>
 
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn color="green darken-1" text @click.prevent="closeDialog">닫기</v-btn>
+      <v-btn color="white darken-1" text @click.prevent="closeDialog">닫기</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -70,7 +57,6 @@ export default {
     return {
       directors: [],
       actors: [],
-      new_comment: '',
     }
   },
 
@@ -121,26 +107,6 @@ export default {
         })
       })
     },
-
-    writeComment() {
-      const token = sessionStorage.getItem('jwt')
-      const options = {
-        headers: {
-          Authorization: 'JWT ' + token
-        },
-        body: {
-          content: this.new_comment 
-        }
-      }
-
-      axios.get(`http://localhost:8000/api/v1/review/comment/`, options)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(error => {
-        console.log(error.response)
-      })
-    }
 
   }, //end of methods
 

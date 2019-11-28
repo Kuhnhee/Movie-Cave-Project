@@ -5,6 +5,17 @@
     </v-card-title>
 
     <v-container fluid>
+
+      <div class="text-center">
+        <v-rating
+          readonly
+          v-model="rating"
+          color="orange"
+          background-color="orange lighten-3"
+          size="21.6"
+        ></v-rating>
+      </div>
+
       <v-row>
         <v-col cols="9">
           <v-text-field label="코멘트" v-model="new_comment"></v-text-field>
@@ -24,6 +35,7 @@
 
 <script>
 import axios from 'axios'
+import jwtDecode from 'jwt-decode'
 
 export default {
   data () {
@@ -49,18 +61,19 @@ export default {
     },
 
     writeComment() {
-
       const token = sessionStorage.getItem('jwt')
-      const options = {
-        headers: {
-          Authorization: 'JWT ' + token
-        },
-        body: {
-          content: this.new_comment 
-        }
+      const user_id = jwtDecode(token).user_id
+      console.log(token)
+
+      const headers = {'Authorization': `JWT ${token}`}
+      const review = {
+        'content': this.new_comment,
+        'scoore': this.rating,
+        'movie': this.movie.id,
+        'user': user_id
       }
 
-      axios.get(`http://localhost:8000/api/v1/review/comment/`, options)
+      axios.post('http://localhost:8000/api/v1/review/', review, headers)
       .then(res => {
         console.log(res)
       })
@@ -70,9 +83,6 @@ export default {
     }
 
   },
-
-
-
 
 }
 </script>

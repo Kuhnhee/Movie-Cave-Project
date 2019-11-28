@@ -1,6 +1,6 @@
 <template>
   <div id="reccomand">
-    <h3>Recommand</h3>
+    <h3>Recommend</h3>
     <v-carousel
       align="center"
       justify="center"

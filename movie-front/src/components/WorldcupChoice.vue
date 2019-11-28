@@ -1,8 +1,25 @@
 <template>
+
   <div v-if="!!movie">
     <h2>{{movie.title}}</h2>
-    <img @click="select" :src="movie.img_url" alt="" width="400px" height="600px">
+    <v-hover
+      v-slot:default="{ hover }"
+      :open-delay="openDelay"
+      :close-delay="closeDelay"
+      :disabled="disabled"
+      :value="value"
+    >
+      <img
+        @click="select"
+        :src="movie.img_url"
+        alt=""
+        width="400px"
+        height="600px"
+        :elevation="hover ? 12 : 2"
+      >
+    </v-hover>
   </div>
+
 </template>
 
 <script>
@@ -12,6 +29,10 @@ export default {
   data () {
     return {
       movieObject: null,
+      disabled: false,
+      openDelay: '0',
+      closeDelay: '0',
+      value: false,
     }
   },
   

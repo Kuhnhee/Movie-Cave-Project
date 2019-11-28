@@ -1,16 +1,33 @@
 <template>
   <v-container class="worldcup">
-    <div v-if="!left">
-      <v-btn white @click="next">시작</v-btn>
+
+    <div v-if="!finishFlag">
+      <h1>더 좋아하는 영화를 선택해 주세요</h1>
+      <hr>
+      <div v-if="!left">
+        <v-btn @click="next">{{ roundNum }}강 시작하기</v-btn>
+      </div>
+      <v-row>
+        <v-col cols="6">
+          <WorldcupChoice id="left" :movie="left" @choiceEvent="leftChoice" />
+        </v-col>
+        <v-col cols="6">
+          <WorldcupChoice id="right" :movie="right" @choiceEvent="rightChoice" />
+        </v-col>
+      </v-row>
     </div>
-    <v-row>
-      <v-col cols="6">
-        <WorldcupChoice id="left" :movie="left" @choiceEvent="leftChoice" />
-      </v-col>
-      <v-col cols="6">
-        <WorldcupChoice id="right" :movie="right" @choiceEvent="rightChoice" />
-      </v-col>
-    </v-row>
+
+    <div v-if="finishFlag">
+      <h1>우승!</h1>
+      <hr>
+      <v-row>
+        <v-col cols="6" justify="center">
+          <WorldcupChoice id="winner" :movie="left"/>
+        </v-col>
+      </v-row>
+
+    </div>
+
   </v-container>
 </template>
 
@@ -23,8 +40,10 @@ export default {
     return {
       current_round: [],
       next_round: [],
+      roundNum: 8,
       left: null,
       right: null,
+      finishFlag: false,
     }
   },
 
@@ -55,12 +74,14 @@ export default {
 
     leftChoice() {
       this.next_round.push(this.left)
+      this.left = null
       this.right = null
       this.next()
     },
 
     rightChoice() {
       this.next_round.push(this.right)
+      this.left = null
       this.right = null
       this.next()
     },
@@ -72,10 +93,22 @@ export default {
   },
 
   watch: {
+    //라운드 종료 판별
     left: function() {
-      if (this.current_round.length === 0 && this.left === null) {
+      if (this.current_round.length === 0 && !this.left) {
         this.current_round = this.next_round
         this.next_round = []
+        this.roundNum = this.current_round.length
+      }
+    },
+
+    //우승자 판별
+    right: function() {
+      if (this.next_round.length === 0 && this.current_round.length === 1 && !this.left && !this.right) {
+        this.left = this.current_round.pop()
+        this.finishFlag = true
+
+        //취향점수 반영을 위한 API 호출
       }
     }
   },

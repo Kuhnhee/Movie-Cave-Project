@@ -1,7 +1,8 @@
 <template>
   <div class="mx-auto" id="profile">
-    <h2>{{ username }}'s Profile</h2>
+    
     <v-container>
+      <h2>{{ username }}'s Profile</h2>
       <v-row
         justify="center"
       >

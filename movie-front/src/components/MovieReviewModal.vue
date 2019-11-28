@@ -75,9 +75,11 @@ export default {
         user: user_id
       }
       axios.post(reviewURL, data, options)
-      .then(res => console.log(res))
+      .then(() => {
+        this.$emit('reviewUpdateEvent', true)
+      })
       
-      this.$emit('reviewUpdateEvent', true)
+      
     }
   },
 

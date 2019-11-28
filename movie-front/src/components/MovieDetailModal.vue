@@ -167,11 +167,11 @@ export default {
         }
       }
       axios.get(`http://localhost:8000/api/v1/review/delete/${review.id}/`, options)
-      .then(res => {
-        console.log(res)
+      .then(() => {
+        this.$emit('reviewUpdateEvent', true)
       })
 
-      this.$emit('reviewUpdateEvent', true)
+      
     },
 
   }, //end of methods
@@ -182,9 +182,6 @@ export default {
     // this.reviewsCall()
   },
 
-  // updated() {
-  //   this.reviewsCall()
-  // }
 }
 </script>
 

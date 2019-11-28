@@ -105,8 +105,6 @@
       
       // rating한 적이 있는 영화는 별점 표시 (mount되는 시점에서 실행되는 함수)
       ratingCheck() {
-        // console.log("영화 몇 개 로드됐나?")
-
         // 현재 영화의 리뷰 목록에서 현재 로그인한 사람의 id를 찾아본다.
         const token = sessionStorage.getItem('jwt')
         const user_id = jwtDecode(token).user_id

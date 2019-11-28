@@ -78,9 +78,9 @@
           align="center"
           justify="center"
         >
-          <div>
+          <v-col>
             <router-view></router-view>
-          </div>
+          </v-col>
         </v-row>
       </v-container>
     </v-content>
@@ -96,7 +96,7 @@
   export default {
     name: 'App',
     methods: {
-      ...mapActions(['login', 'logout']),
+      ...mapActions(['login', 'logout', 'refreshMovie']),
     },
     computed: {
       ...mapGetters(['isLoggedIn']),

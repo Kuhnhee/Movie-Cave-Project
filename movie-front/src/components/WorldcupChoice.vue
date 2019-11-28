@@ -10,14 +10,14 @@
       :value="value"
       max-height="600px"
     >
-      <img
+      <v-img
         @click="select"
         :src="movie.img_url"
         alt=""
         width="400px"
         height="600px"
         :elevation="hover ? 12 : 2"
-      >
+      ></v-img>
     </v-hover>
   </div>
 

@@ -10,11 +10,11 @@
           <h3>Movie List</h3>
           <Timeline :my_movies="my_movies"/>
         </v-col>
-        <v-col  cols="8">
+        <v-col cols="8">
           <h3>Review List</h3>
           <ReviewList :my_reviews="my_reviews"/>
           <br>
-          <RecommandList/>
+          <RecommandList :movies="reccomands"/>
         </v-col>
       </v-row>
     </v-container>
@@ -27,6 +27,7 @@
 import Timeline from '../components/Timeline'
 import ReviewList from '../components/ReviewList'
 import RecommandList from '../components/RecommandList'
+import jwtDecode from 'jwt-decode'
 import { mapGetters } from 'vuex';
 import router from '../router';
 import axios from 'axios'
@@ -42,6 +43,7 @@ export default {
       my_reviews: [],
       my_movies: [],
       reviews_info: [],
+      reccomands: [],
     }
   },
 
@@ -55,6 +57,7 @@ export default {
     getInfo() {
       this.username = sessionStorage.getItem('username')
       const token = sessionStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
       const options = {
         headers: {
           Authorization: `JWT ${token}`
@@ -77,6 +80,11 @@ export default {
         })
       })
       .catch(err => console.log(err))
+
+      axios.get(`http://localhost:8000/api/v1/preference/${user_id}/`, options)
+      .then(res => {
+        this.reccomands = res.data
+      })
     }
   }, 
 

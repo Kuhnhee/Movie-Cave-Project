@@ -26,6 +26,7 @@ urlpatterns = [
     path('review/user/<int:user_pk>/', views.review_user, name='review_user'),
 
     path('preference/', views.preference, name='preference'),
+    path('preference/<int:user_pk>/', views.recommand, name="recommand"),
 
     # api for infinite scrolling
     path('movie/list/', views.MovieListAPI.as_view(), name='movie_list'),

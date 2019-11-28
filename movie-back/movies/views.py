@@ -192,6 +192,51 @@ def preference(request):
 
     return Response(result)
 
+# .../preference/user_pk/'
+@api_view(['GET'])
+def recommand(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    genre_score_set = Scoring.objects.filter(user=user)
+
+    # target_genre, current_max 초기화
+    target_genre = genre_score_set[0].genre
+    current_max = genre_score_set[0].score
+    for record in genre_score_set:
+        # record.score : 점수
+        # record.genre : Genre object
+        # record.genre_id : genre id
+        
+        #record들 중, 가장 점수가 높은 genre를 찾자
+        if record.score > current_max:
+            target_genre = record.genre
+
+    # target_genre에 해당하는 영화들 중, 현재 유저가 보지 않은 것을 찾자.
+    cnt = 0
+    recommandations = []
+    movies = target_genre.movies.all()
+    for movie in movies:
+        # movie는 Movie 객체
+
+        #추천 갯수는 최대 5개로 제한
+        if cnt == 6:
+            break
+
+        #이미 평가한 영화인지 확인
+        proceed = False
+        reviews = movie.review_set.all()
+        for review in reviews:
+            if review.user_id == user_pk:
+                proceed = True
+                break
+        if proceed:
+            continue
+
+        recommandations.append(movie)
+        cnt += 1
+
+    movie_serializer = MovieSerializer(recommandations, many=True)
+
+    return Response(movie_serializer.data)
 
 
 # .../review/

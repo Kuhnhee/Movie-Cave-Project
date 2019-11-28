@@ -87,11 +87,10 @@ export default {
         user: user_id
       }
       axios.post(preferenceURL, prefData, options)
-      .then(res=>{
-        console.log(res)
-      })
-
-      
+      // .then(res=>{
+      //   console.log(res)
+      // })
+ 
     }
   },
 

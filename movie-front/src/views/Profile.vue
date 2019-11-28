@@ -2,15 +2,15 @@
   <div class="mx-auto" id="profile">
     
     <v-container>
-      <h2>{{ username }}'s Profile</h2>
+      <h2>{{ username }}'s</h2>
       <v-row
         justify="center"
       >
-        <v-col cols="6">
-          <h3>Movie Timeline</h3>
+        <v-col cols="3">
+          <h3>Movie List</h3>
           <Timeline :my_movies="my_movies"/>
         </v-col>
-        <v-col  cols="6">
+        <v-col  cols="8">
           <h3>Review List</h3>
           <ReviewList :my_reviews="my_reviews"/>
           <br>
@@ -75,7 +75,6 @@ export default {
             this.my_reviews.push(new_info)
           })
         })
-        console.log(this.reviews_info)
       })
       .catch(err => console.log(err))
     }

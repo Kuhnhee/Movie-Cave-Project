@@ -7,11 +7,14 @@
       <div v-if="!left">
         <v-btn @click="next">{{ roundNum }}강 시작하기</v-btn>
       </div>
-      <v-row>
-        <v-col cols="6">
+      <v-row
+        align="center"
+        justify="center"
+      >
+        <v-col cols="6" align="center">
           <WorldcupChoice id="left" :movie="left" @choiceEvent="leftChoice" />
         </v-col>
-        <v-col cols="6">
+        <v-col cols="6" align="center">
           <WorldcupChoice id="right" :movie="right" @choiceEvent="rightChoice" />
         </v-col>
       </v-row>
@@ -20,8 +23,11 @@
     <div v-if="finishFlag">
       <h1>우승!</h1>
       <hr>
-      <v-row>
-        <v-col cols="6" justify="center">
+      <v-row
+        align="center"
+        justify="center"
+      >
+        <v-col cols="6">
           <WorldcupChoice id="winner" :movie="left"/>
         </v-col>
       </v-row>

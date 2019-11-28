@@ -3,7 +3,7 @@
 		dense
 	>
 		<v-timeline-item
-			v-for="movie in movies"
+			v-for="movie in my_movies"
 			:key="movie.pk"
 		>
 			<v-card
@@ -25,11 +25,11 @@
 <script>
 export default {
 	name: "timeline",
-	data() {
-		return{
-			movies: sessionStorage.getItem('my_movies')
+	props: {
+		my_movies: {
+			type:Array
 		}
-	}
+	},
 };
 </script>
 

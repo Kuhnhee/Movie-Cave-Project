@@ -96,7 +96,7 @@
   export default {
     name: 'App',
     methods: {
-      ...mapActions(['login', 'logout', 'refreshMovie']),
+      ...mapActions(['login', 'logout']),
     },
     computed: {
       ...mapGetters(['isLoggedIn']),

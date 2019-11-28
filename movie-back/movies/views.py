@@ -159,7 +159,7 @@ def score_update(request):
 def review_create(request):
     review_serializer = ReviewSerializer(data=request.POST)
     if review_serializer.is_valid():
-        review_serializer.save()
+        review_serializer.save(user=request.user)
         return Response(review_serializer.data)
     return Response(status=400)
 

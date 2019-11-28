@@ -34,7 +34,7 @@ class Movie(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='movies', blank=True)
     
     class Meta:
-        ordering=['-rate']
+        ordering=['-open_date', '-rate']
 
 class Review(models.Model):
     content = models.CharField(max_length=40)

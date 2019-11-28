@@ -56,9 +56,11 @@
                 | {{ review.content }}
                 <i style="font-size:12px;"> by {{ review.username }}</i>
               </div>
-              <v-btn small v-on:click="reviewDelete($event, review)">
-                삭제
-              </v-btn>
+              <div v-if="user_pk==review.user" >
+                <v-btn small v-on:click="reviewDelete($event, review)">
+                  삭제
+                </v-btn>
+              </div>
 
              </v-row>
           </li>
@@ -77,6 +79,7 @@
 
 <script>
 import axios from 'axios'
+import jwtDecode from 'jwt-decode'
 
 export default {
   data () {
@@ -84,6 +87,7 @@ export default {
       directors: [],
       actors: [],
       target_review: null,
+      user_pk: ''
     }
   },
 
@@ -101,6 +105,11 @@ export default {
   methods: {
     closeDialog() {
       this.$emit('closeDialogEvent', true)
+    },
+
+    getUserPk(){
+      const token = sessionStorage.getItem('jwt')
+      this.user_pk = jwtDecode(token).user_id
     },
 
     directorsNameCall() {
@@ -157,6 +166,7 @@ export default {
   mounted() {
     this.directorsNameCall()
     this.actorsNameCall()
+    this.getUserPk()
     // this.reviewsCall()
   },
 

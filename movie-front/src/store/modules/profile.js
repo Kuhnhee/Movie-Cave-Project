@@ -12,12 +12,6 @@ const state = {
 };
 
 const getters = {
-    getAllReviews (state) {
-        return state.reviews
-    },
-    gertAllMovies (state) {
-        return state.movies
-    },
 };
 
 const mutations = {
@@ -25,7 +19,7 @@ const mutations = {
         state.reviews = reviews
         sessionStorage.setItem('my_reviews', reviews)
     },
-    changeMovies (state, movies) {
+    changeMyMovies (state, movies) {
         state.movies = movies
         sessionStorage.setItem('my_movies', movies)
     },
@@ -38,9 +32,8 @@ const actions = {
         }
         axios.get(HOST+'/api/v1/my_movies/', options)
             .then(res => {
-                console.log(res)
                 commit('changeReviews', res.data.review_set);
-                commit('changeMovies', res.data.movies);
+                commit('changeMyMovies', res.data.movies);
             })
             .catch(err => console.log(err))
     },

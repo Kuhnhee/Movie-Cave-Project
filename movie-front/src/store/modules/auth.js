@@ -33,7 +33,9 @@ const mutations = {
 const actions = {
     logout: ( { commit }) => {
         commit('setToken', null);
-        sessionStorage.removeItem('jwt');
+        sessionStorage.removeItem('my_movies');
+        sessionStorage.removeItem('my_reviews');
+        sessionStorage.removeItem('username');
         router.push('/login');
     },
 
@@ -47,26 +49,26 @@ const actions = {
             router.push('/');
         }
         else {
-            axios.post(HOST + '/api-token-auth/', credentials)
-                .then(token => {
-                    commit('setToken', token.data.token);
-                    commit('setUsername', credentials.username);
-                    commit('setLoading', false);
-                    router.push('/');
-                })
-                .catch(err => {
-                    if (!err.response) {
-                        commit('pushError', 'Network Error..')
-                    } else if (err.response.status === 400) {
-                        commit('pushError', 'Invalid username or password');
-                    } else if (err.response.status === 500) {
-                        commit('pushError', 'Internal Server error. Please try again later')
-                    } else {
-                        commit('pushError', 'Some error occured');
-                    }
-                    commit('setLoading', false);
-                })
-        }
+                axios.post(HOST + '/api-token-auth/', credentials)
+                    .then(token => {
+                        commit('setToken', token.data.token);
+                        commit('setUsername', credentials.username);
+                        commit('setLoading', false);
+                        router.push('/');
+                    })
+                    .catch(err => {
+                        if (!err.response) {
+                            commit('pushError', 'Network Error..')
+                        } else if (err.response.status === 400) {
+                            commit('pushError', 'Invalid username or password');
+                        } else if (err.response.status === 500) {
+                            commit('pushError', 'Internal Server error. Please try again later')
+                        } else {
+                            commit('pushError', 'Some error occured');
+                        }
+                        commit('setLoading', false);
+                    })
+            }
     },
 
     validation: ({ commit, dispatch }, credentials) => {

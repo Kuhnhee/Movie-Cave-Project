@@ -14,7 +14,7 @@ const store = new Vuex.Store({
   // },
   modules: {
     auth,
-    profile
+    profile,
   }
 })
 

@@ -1,7 +1,12 @@
 <template>
-  <div id="signup">
-    <SignupForm />
-  </div>
+  <v-row
+  align="center"
+  justify="center"
+  >
+    <v-col cols="6">
+      <SignupForm />
+    </v-col>
+  </v-row>
 </template>
 
 <script>

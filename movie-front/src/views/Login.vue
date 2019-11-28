@@ -1,7 +1,12 @@
 <template>
-  <div id="login">
-    <LoginForm />
-  </div>
+  <v-row
+  align="center"
+  justify="center"
+  >
+    <v-col cols="4">
+      <LoginForm />
+    </v-col>
+  </v-row>
 </template>
 
 <script>

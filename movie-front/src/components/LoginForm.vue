@@ -26,7 +26,9 @@
           type="password"
         ></v-text-field>
       </div>
-      <button>Login</button>
+      <div>
+        <button>Login</button>
+      </div>
     </form>
   </div>
 </template>

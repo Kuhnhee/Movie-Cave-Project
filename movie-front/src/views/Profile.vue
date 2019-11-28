@@ -1,13 +1,17 @@
 <template>
   <div class="mx-auto" id="profile">
-    <h2>{{ username }}</h2>
-    <v-container fluid>
-      <v-row>
+    <h2>    {{ username }}'s Profile</h2>
+    <v-container>
+      <v-row
+        justify="center"
+      >
         <v-col cols="6">
-          <Timeline :movies="movies"/>
+          <h3>Movie Timeline</h3>
+          <Timeline/>
         </v-col>
         <v-col  cols="6">
-          <ReviewList :reviews="reviews"/>
+          <h3>Review List</h3>
+          <ReviewList/>
         </v-col>
       </v-row>
     </v-container>
@@ -27,8 +31,6 @@ export default {
   
   data () {
     return {
-      movies: [],
-      reviews: [],
       username: sessionStorage.getItem('username')
     }
   },
@@ -39,12 +41,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['refreshInfo']),
+    ...mapActions(['refreshInfo', 'refreshMovie']),
     getInfo() {
       const token = sessionStorage.getItem('jwt')
       this.refreshInfo(token)
-      this.movies = sessionStorage.getItem('my_movies')
-      this.reviews = sessionStorage.getItem('my_reviews')
     }
   }, 
 
@@ -52,12 +52,12 @@ export default {
     ...mapGetters(['isLoggedIn']),
   },
 
-  mounted() {
-    this.getInfo()
-  },
-  
   created () {
-    router.push(this.isLoggedIn ? '/profile' : '/login')
+    if (this.isLoggedIn) {
+      this.getInfo()
+    } else{
+      router.push('/login')
+    }
   }
 };
 </script>

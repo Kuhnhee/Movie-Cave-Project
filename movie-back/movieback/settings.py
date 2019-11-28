@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'corsheaders',
     'rest_framework',
+    'rest_framework_jwt',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

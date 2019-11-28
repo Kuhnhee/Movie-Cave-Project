@@ -154,7 +154,14 @@ def score_update(request):
 
     return Response(result)
 
-
+# .../review/
+@api_view(['POST'])
+def review_create(request):
+    review_serializer = ReviewSerializer(data=request.POST)
+    if review_serializer.is_valid():
+        review_serializer.save()
+        return Response(review_serializer.data)
+    return Response(status=400)
 
 # for infinite scroll(Pagination)
 class MoviePagination(pagination.PageNumberPagination):

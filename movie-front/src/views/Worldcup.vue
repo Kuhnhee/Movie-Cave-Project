@@ -32,8 +32,9 @@
 </template>
 
 <script>
-import WorldcupChoice from '@/components/WorldcupChoice.vue'
 import axios from 'axios'
+import jwtDecode from 'jwt-decode'
+import WorldcupChoice from '@/components/WorldcupChoice.vue'
 
 export default {
   data () {
@@ -109,6 +110,25 @@ export default {
         this.finishFlag = true
 
         //취향점수 반영을 위한 API 호출
+        const token = sessionStorage.getItem('jwt')
+        const user_id = jwtDecode(token).user_id
+        const preferenceURL = 'http://localhost:8000/api/v1/preference/'
+        const options = {
+          headers: {
+            Authorization: 'JWT ' + token
+          }
+        }
+        console.log(this.left)
+        const data= {
+          value: 8,
+          genres: this.left.genres,
+          user: user_id
+        }
+        axios.post(preferenceURL, data, options)
+        // .then(res=>{
+        //   console.log(res)
+        // })
+
       }
     }
   },

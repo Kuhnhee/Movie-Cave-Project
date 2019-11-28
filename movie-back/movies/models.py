@@ -8,6 +8,7 @@ class User(AbstractUser):
 
 class Genre(models.Model):
     name = models.CharField(max_length=20)
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='genres', through='Scoring', blank=True)
 
 class Director(models.Model):
     name = models.CharField(max_length=50)
@@ -51,4 +52,9 @@ class Worldcup(models.Model):
 class Ranking(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     worldcup = models.ForeignKey(Worldcup, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+
+class Scoring(models.Model):
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)

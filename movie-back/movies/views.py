@@ -148,7 +148,9 @@ def score_update(request):
     movie = get_object_or_404(Movie, pk=movie_pk)
     worldcup = get_object_or_404(Worldcup, pk=worldcup_pk)
 
+
     target_record = Ranking.objects.get(movie=movie, worldcup=worldcup)
+
     target_record.score += 1
     target_record.save()
 
@@ -159,6 +161,38 @@ def score_update(request):
     }
 
     return Response(result)
+
+# .../preference/'
+@api_view(['POST'])
+def preference(request):
+    '''
+    기대하는 request.data 형태
+    genres에 있는 genre마다 user의 선호도 점수를 value만큼 증가한다.
+    {
+        'user': ?,
+        'genres': ?, 장르 리스트
+        'value': ?,
+    }
+    '''
+    data = request.data
+    user_id = data.get('user')
+    genres = data.get('genres')
+    user = get_object_or_404(get_user_model(), pk=user_id)
+    for genre_id in genres:
+        genre = get_object_or_404(Genre, pk=genre_id)
+        target_record, is_created = Scoring.objects.get_or_create(genre=genre, user=user)
+        target_record.score += int(data.get('value'))
+        target_record.save()
+
+    result = {
+        'user': user_id,
+        'genres': genres,
+        'val': data.get('value')
+    }
+
+    return Response(result)
+
+
 
 # .../review/
 @api_view(['POST'])

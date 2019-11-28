@@ -18,4 +18,7 @@ urlpatterns = [
     path('worldcup/<int:worldcup_pk>/', views.worldcup_detail, name='worldcup_detail'),
     path('worldcup/custom/', views.create_worldcup, name='create_worldcup'),
     path('score_update/', views.score_update, name='score_update'),
+
+    # for infinite scroll
+    path('movie/list/', views.MovieListAPI.as_view(), name='movie_list')
 ]

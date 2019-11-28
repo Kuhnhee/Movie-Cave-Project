@@ -108,6 +108,7 @@
       drawer: null,
     }),
     created () {
+      this.$store.dispatch('initialLogin')
       this.$vuetify.theme.dark = true
     },
   }

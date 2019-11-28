@@ -8,15 +8,15 @@
 		>
 			<v-card
 			class="elevation-2 mx-auto"
-			width="600"
+			max-width="600"
 			>
 				<v-img
 				:src="movie.img_url"
-				height="150"
+				height="300"
 				>
-					<v-card-title class="headline">{{ movie.title }}</v-card-title>
-					<v-card-subtitle>{{ movie.open_date }}</v-card-subtitle>
 				</v-img>
+				<v-card-title class="headline">{{ movie.title }}</v-card-title>
+				<v-card-subtitle>개봉일: {{ movie.open_date }}</v-card-subtitle>
 			</v-card>
 		</v-timeline-item>
 	</v-timeline>

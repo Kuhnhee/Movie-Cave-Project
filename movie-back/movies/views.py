@@ -163,9 +163,9 @@ def score_update(request):
 # .../review/
 @api_view(['POST'])
 def review_create(request):
-    review_serializer = ReviewSerializer(data=request.POST)
+    review_serializer = ReviewSerializer(data=request.data)
     if review_serializer.is_valid():
-        review_serializer.save(user=request.user)
+        review_serializer.save()
         return Response(review_serializer.data)
     return Response(status=400)
 

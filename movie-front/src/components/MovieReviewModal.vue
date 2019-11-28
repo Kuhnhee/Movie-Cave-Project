@@ -35,7 +35,7 @@
 
 <script>
 import axios from 'axios'
-// import jwtDecode from 'jwt-decode'
+import jwtDecode from 'jwt-decode'
 
 export default {
   data () {
@@ -61,6 +61,7 @@ export default {
     },
     createReview() {
       const token = sessionStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
       const reviewURL = 'http://localhost:8000/api/v1/review/'
       const options = {
         headers: {
@@ -68,11 +69,11 @@ export default {
         }
       }
       const data= {
-          content: this.new_comment,
-          score: this.rating,
-          movie_id: this.movie.id,
-        }
-      console.log(reviewURL, data, options)
+        content: this.new_comment,
+        score: this.rating,
+        movie: this.movie.id,
+        user: user_id
+      }
       axios.post(reviewURL, data, options)
       .then(res => console.log(res))
       

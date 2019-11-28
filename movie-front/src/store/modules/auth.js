@@ -5,6 +5,7 @@ import router from '../../router';
 
 const state = {
     token: null,
+    username: null,
     errors: [],
     loading: false,
 };
@@ -20,6 +21,10 @@ const mutations = {
     setToken: (state, token) => {
         state.token = token;
         sessionStorage.setItem('jwt', token);
+    },
+    setUsername: (state, name) => {
+        state.username = name;
+        sessionStorage.setItem('username', name)
     },
     pushError: (state, error) => state.errors.push(error),
     clearErrors: state => state.errors = [],
@@ -45,6 +50,7 @@ const actions = {
             axios.post(HOST + '/api-token-auth/', credentials)
                 .then(token => {
                     commit('setToken', token.data.token);
+                    commit('setUsername', credentials.username);
                     commit('setLoading', false);
                     router.push('/');
                 })

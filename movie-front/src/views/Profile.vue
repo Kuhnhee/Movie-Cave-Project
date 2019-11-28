@@ -1,53 +1,63 @@
 <template>
   <div class="mx-auto" id="profile">
-    <h2>My Page</h2>
-    <div v-if="isLoggedIn">
-      <Timeline :movies="movies"/>
-      <ReviewList :reviews="reviews"/>
-    </div>
+    <h2>{{ username }}</h2>
+    <v-container fluid>
+      <v-row>
+        <v-col cols="6">
+          <Timeline :movies="movies"/>
+        </v-col>
+        <v-col  cols="6">
+          <ReviewList :reviews="reviews"/>
+        </v-col>
+      </v-row>
+    </v-container>
+    
+    
   </div>
 </template>
 
 <script>
 import Timeline from '../components/Timeline'
 import ReviewList from '../components/ReviewList'
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import router from '../router';
-import axios from 'axios'
 
 export default {
   name: "profile",
+  
   data () {
     return {
       movies: [],
       reviews: [],
+      username: sessionStorage.getItem('username')
     }
   },
+
   components: {
     Timeline,
     ReviewList,
   },
+
   methods: {
-    ...mapGetters(['isLoggedIn']),
+    ...mapActions(['refreshInfo']),
     getInfo() {
-      this.$session.start();
-      const token = this.$session.get('jwt');
-      const options = {
-        headers: {
-          Authorization: `JWT ${token}`,
-        }
-      };
-      axios.get('http://localhost:8000/api/v1/my_movies/', options)
-        .then(res => {
-          this.movies = res.data.movies
-          this.reviews = res.data.review_set
-          })
-        .catch(err => console.log(err.response));
+      const token = sessionStorage.getItem('jwt')
+      this.refreshInfo(token)
+      this.movies = sessionStorage.getItem('my_movies')
+      this.reviews = sessionStorage.getItem('my_reviews')
     }
+  }, 
+
+  computed: {
+    ...mapGetters(['isLoggedIn']),
+  },
+
+  mounted() {
+    this.getInfo()
   },
   
   created () {
-    router.push(this.isLoggedIn ? '/profile' : '/login');
+    router.push(this.isLoggedIn ? '/profile' : '/login')
   }
 };
 </script>

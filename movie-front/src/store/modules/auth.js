@@ -31,6 +31,12 @@ const mutations = {
 };
 
 const actions = {
+    initialLogin: ({ commit }) => {
+        const token = sessionStorage.getItem('jwt')
+        if (token) {
+            commit('setToken', token)
+        }
+    },
     logout: ( { commit }) => {
         commit('setToken', null);
         sessionStorage.removeItem('my_movies');

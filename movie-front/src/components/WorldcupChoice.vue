@@ -8,6 +8,7 @@
       :close-delay="closeDelay"
       :disabled="disabled"
       :value="value"
+      max-height="600px"
     >
       <img
         @click="select"

@@ -5,6 +5,7 @@
 		<v-timeline-item
 			v-for="movie in my_movies"
 			:key="movie.pk"
+			max-height="800"
 		>
 			<v-card
 			class="elevation-2 mx-auto"
@@ -12,11 +13,12 @@
 			>
 				<v-img
 				:src="movie.img_url"
-				height="300"
+				height="400"
 				>
+					<v-card-title class="headline">{{ movie.title }}</v-card-title>
+					<v-card-subtitle>개봉일: {{ movie.open_date }}</v-card-subtitle>
 				</v-img>
-				<v-card-title class="headline">{{ movie.title }}</v-card-title>
-				<v-card-subtitle>개봉일: {{ movie.open_date }}</v-card-subtitle>
+
 			</v-card>
 		</v-timeline-item>
 	</v-timeline>

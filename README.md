@@ -197,7 +197,7 @@ Movie Worldcup: Gamification, Recommand
 
 7. `Profile`
 
-![profile (2)](./img/profile (2).PNG)
+![profile(2)](./img/profile(2).PNG)
 
 
 

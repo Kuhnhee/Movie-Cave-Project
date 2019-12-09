@@ -1,20 +1,10 @@
 # Final Project - Movie Cave
 
-## 1. 결과물
+## 1. Intro
 
-- Server URL
+Project Movie Cave는 웹 프레임워크를 활용한 영화 추천 서비스로 다양한 영화 정보를 제공한다. 사용자는 영화에 대한 리뷰를 남길 수 있으며, 영화 이상형 월드컵과 영화에 대해 사용자가 매긴 평점을 통해 선호하는 장르를 파악하여 영화를 추천해주는 서비스이다.
 
-  [Back-end server](https://movie-cave.herokuapp.com)
-
-  [Front-end server](https://movie-cave-vue.firebaseapp.com)
-
-- Source Code (Github Flow)
-
-  [Github Page](https://github.com/Kuhnhee/Movie-Cave-Project)
-
-
-
-## 2. 준비 사항
+## 2. Requirement
 
 1. Python Web Framework - Django
    - 가상환경 Python 3.7.4
@@ -52,10 +42,12 @@
     | ----------- | ------- | --------------- |
     | id          | Integer | Primary Key     |
     | name        | String  | 감독 이름       |
-  | role        | String  | 역할            |
+    | role        | String  | 역할            |
     | img_url     | Text    | 감독 이미지 URL |
     | description | Text    | 감독 설명       |
 
+  
+  
   
   - `movies/actors`
   
@@ -204,4 +196,20 @@ Movie Worldcup: Gamification, Recommand
 
 
 
+
+
+
+
+
+## 
+
+- Server URL
+
+  [Back-end server](https://movie-cave.herokuapp.com)
+
+  [Front-end server](https://movie-cave-vue.firebaseapp.com)
+
+- Source Code (Github Flow)
+
+  [Github Page](https://github.com/Kuhnhee/Movie-Cave-Project)
 

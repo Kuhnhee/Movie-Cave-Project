@@ -1,33 +1,42 @@
 # Final Project - Movie Cave
 
-## 1. 결과물
-
-- Server URL
-
-  [Back-end server](https://movie-cave.herokuapp.com)
-
-  [Front-end server](https://movie-cave-vue.firebaseapp.com)
-
-- Source Code (Github Flow)
-
-  [Github Page](https://github.com/Kuhnhee/Movie-Cave-Project)
+Project Movie Cave는 웹 프레임워크를 활용한 영화 추천 서비스로 다양한 영화 정보를 제공한다. 사용자는 영화에 대한 리뷰를 남길 수 있으며, 영화 이상형 월드컵과 영화에 대해 사용자가 매긴 평점을 통해 선호하는 장르를 파악하여 영화를 추천해주는 서비스이다.
 
 
+## 1. Requirements
 
-## 2. 준비 사항
+1. Python Web Framework
 
-1. Python Web Framework - Django
-   - 가상환경 Python 3.7.4
+   1. Django 3.0
 
-2. Javascript Framework - Vue js
+      - django-extensions 2.2.5
+
+      - django-cors-headers 3.2.0
+
+      - djangorestframework 3.10.3
+      - djangorestframework-jwt 1.11.0
+      - django-heroku 0.3.1
+      - gunicorn 20.0.4
+
+   2. Python 3.7.4
+
+      - python-decouple 3.3
+
+      - beautifulsoup4 4.8.1
+
+      
+
+2. Javascript Web Framework
+
+   1. Vue 2.6.10
+      - vuex 3.1.2
+      - vuetify 2.2.11
 
 3. Server
    - Back-end: Heroku
    - Front-end: Firebaseapp
 
-
-
-## 3. Data
+## 2. Data
 
 #### -  Seed data
 
@@ -52,19 +61,21 @@
     | ----------- | ------- | --------------- |
     | id          | Integer | Primary Key     |
     | name        | String  | 감독 이름       |
-  | role        | String  | 역할            |
+    | role        | String  | 역할            |
     | img_url     | Text    | 감독 이미지 URL |
     | description | Text    | 감독 설명       |
 
   
+  
+  
   - `movies/actors`
   
     | 필드명      | 자료형  | 설명            |
-  | ----------- | ------- | --------------- |
+    | ----------- | ------- | --------------- |
     | id          | Integer | Primary Key     |
-  | name        | String  | 배우 이름       |
+    | name        | String  | 배우 이름       |
     | role        | String  | 역할            |
-  | img_url     | Text    | 배우 이미지 URL |
+    | img_url     | Text    | 배우 이미지 URL |
     | description | Text    | 배우 설명       |
   
   
@@ -88,7 +99,7 @@
 
 
 
-## 4. Back-end
+## 3. Back-end
 
 #### 1.  `movies` API
 
@@ -146,7 +157,7 @@ Preference
 
 
 
-## 5. Front-end
+## 4. Front-end
 
 ```
 Auth: Signup, Login, Logout
@@ -155,6 +166,21 @@ Profile: Movie Timeline, Review List, Recommand
 Movie Worldcup: Gamification, Recommand
 ```
 
+
+
+## 5. Reuslt
+
+- Server URL
+
+  [Back-end server](https://movie-cave.herokuapp.com)
+
+  [Front-end server](https://movie-cave-vue.firebaseapp.com)
+
+- Source Code (Github Flow)
+
+  [Github Page](https://github.com/Kuhnhee/Movie-Cave-Project)
+  
+  
 
 
 ## 6. 실행 화면
